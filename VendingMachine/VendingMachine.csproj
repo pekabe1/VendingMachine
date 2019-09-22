@@ -49,7 +49,6 @@
     <Compile Include="OrangeJuice.cs" />
     <Compile Include="PaymentProcessing.cs" />
     <Compile Include="Product.cs" />
-    <Compile Include="ProductOrder.cs" />
     <Compile Include="ProductWarehouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

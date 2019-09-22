@@ -51,7 +51,7 @@ namespace VendingMachine
 
             switch (selectProduct.Key)
             {
-                case ConsoleKey.S: // Orane juice
+                case ConsoleKey.S: // Orane Juice Small
                     {
 
                         Console.WriteLine("press again 'S' for small orange juice or 'B' for orange juice");
@@ -64,23 +64,40 @@ namespace VendingMachine
                             Console.WriteLine($"You chose {vendingMachineWarehouse.avalibleOrangeJuiceSmall.Last().ProdName} which cost {vendingMachineWarehouse.avalibleOrangeJuiceSmall.Last().ProdCost}");
                             Console.WriteLine("Insert coins in nominals 1,2,5");
                             var coin = Convert.ToInt32(Console.ReadLine());
-                            paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleOrangeJuiceSmall.Last());
+                            while (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleOrangeJuiceSmall.Last().ProdCost)
+                            {
+                                
+                                paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleOrangeJuiceSmall.Last());
+                                if (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleOrangeJuiceSmall.Last().ProdCost)
+                                {
+                                    Console.WriteLine("Insert next coin");
+                                }
+                            }
                             Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
-                            Console.WriteLine("Change for you " + paymentProcessing.GiveChange(vendingMachineWarehouse.avalibleCoCaSmall.Last()));
+                            Console.WriteLine("Change for you " + paymentProcessing.GiveChange(vendingMachineWarehouse.avalibleOrangeJuiceSmall.Last()));
                             vendingMachineWarehouse.avalibleOrangeJuiceSmall.Pop();
                         }
-                        else if (selectedVolume.Key == ConsoleKey.B)
+                        else if (selectedVolume.Key == ConsoleKey.B)// Orange Juice Big
                         {
                             PaymentProcessing paymentProcessing = new PaymentProcessing();
                             Console.WriteLine();
-                            Console.WriteLine($"You chose {vendingMachineWarehouse.avalibleOrangeJuiceSmall.Last().ProdName} which cost {vendingMachineWarehouse.avalibleOrangeJuiceBig.Last().ProdCost}");
+                            Console.WriteLine($"You chose {vendingMachineWarehouse.avalibleOrangeJuiceBig.Last().ProdName} which cost {vendingMachineWarehouse.avalibleOrangeJuiceBig.Last().ProdCost}");
                             Console.WriteLine("Insert coins in nominals 1,2,5");
                             var coin = Convert.ToInt32(Console.ReadLine());
-                            paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleOrangeJuiceBig.Last());
-                            vendingMachineWarehouse.avalibleOrangeJuiceSmall.Pop();
+                            while (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleOrangeJuiceBig.Last().ProdCost)
+                            {
+
+                                paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleOrangeJuiceBig.Last());
+                                if (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleOrangeJuiceBig.Last().ProdCost)
+                                {
+                                    Console.WriteLine("Insert next coin");
+                                }
+                            }
+                            
+                            vendingMachineWarehouse.avalibleOrangeJuiceBig.Pop();
                             Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
-                            Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
-                            Console.WriteLine("Change for you " + paymentProcessing.GiveChange(vendingMachineWarehouse.avalibleCoCaBig.Last()));
+
+                            Console.WriteLine("Change for you " + paymentProcessing.GiveChange(vendingMachineWarehouse.avalibleOrangeJuiceBig.Last()));
                             vendingMachineWarehouse.avalibleOrangeJuiceBig.Pop();
                         }
                         else
@@ -94,20 +111,27 @@ namespace VendingMachine
                         Console.WriteLine("press again 'S' for small water or 'B' for big water");
 
                         var selectedVolume = Console.ReadKey();
-                        if (selectedVolume.Key == ConsoleKey.S)
+                        if (selectedVolume.Key == ConsoleKey.S) // Water Small
                         {
                             PaymentProcessing paymentProcessing = new PaymentProcessing();
                             Console.WriteLine();
                             Console.WriteLine($"You chose {vendingMachineWarehouse.avalibleWaterSmall.Last().ProdName} which cost {vendingMachineWarehouse.avalibleWaterSmall.Last().ProdCost}");
                             Console.WriteLine("Insert coins in nominals 1,2,5");
                             var coin = Convert.ToInt32(Console.ReadLine());
-                            paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleWaterSmall.Last());
+                            while (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleWaterSmall.Last().ProdCost)
+                            {
 
+                                paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleWaterSmall.Last());
+                                if (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleWaterSmall.Last().ProdCost)
+                                {
+                                    Console.WriteLine("Insert next coin");
+                                }
+                            }
                             Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
                             Console.WriteLine("Change for you " + paymentProcessing.GiveChange(vendingMachineWarehouse.avalibleWaterSmall.Last()));
-                            vendingMachineWarehouse.avalibleWaterSmall.Pop();// water small
+                            vendingMachineWarehouse.avalibleWaterSmall.Pop();
                         }
-                        else if (selectedVolume.Key == ConsoleKey.B)
+                        else if (selectedVolume.Key == ConsoleKey.B) //Water Big
                         {
                             PaymentProcessing paymentProcessing = new PaymentProcessing();
                             Console.WriteLine();
@@ -116,9 +140,9 @@ namespace VendingMachine
                             var coin = Convert.ToInt32(Console.ReadLine());
 
                             paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleWaterBig.Last());
-                            vendingMachineWarehouse.avalibleOrangeJuiceSmall.Pop();
+                            vendingMachineWarehouse.avalibleWaterBig.Pop();
                             Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
-                            Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
+
                             Console.WriteLine("Change for you " + paymentProcessing.GiveChange(vendingMachineWarehouse.avalibleWaterBig.Last()));
                             vendingMachineWarehouse.avalibleWaterBig.Pop();
                         }
@@ -128,9 +152,9 @@ namespace VendingMachine
                         }
                         break;
                     }
-                case ConsoleKey.C:// Water
+                case ConsoleKey.C:// CoCa Small
                     {
-                        Console.WriteLine("press again 'S' for small water or 'B' for big water");
+                        Console.WriteLine("press again 'S' for small cola or 'B' for big cola");
 
                         var selectedVolume = Console.ReadKey();
                         if (selectedVolume.Key == ConsoleKey.S)
@@ -139,25 +163,40 @@ namespace VendingMachine
                             Console.WriteLine();
                             Console.WriteLine($"You chose {vendingMachineWarehouse.avalibleCoCaSmall.Last().ProdName} which cost {vendingMachineWarehouse.avalibleCoCaSmall.Last().ProdCost}");
                             Console.WriteLine("Insert coins in nominals 1,2,5");
-
                             var coin = Convert.ToInt32(Console.ReadLine());
-                            paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleCoCaSmall.Last());
+                            while (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleCoCaSmall.Last().ProdCost)
+                            {
 
+                                paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleCoCaSmall.Last());
+                                if (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleCoCaSmall.Last().ProdCost)
+                                {
+                                    Console.WriteLine("Insert next coin");
+                                }
+                            }
                             Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
                             Console.WriteLine("Change for you " + paymentProcessing.GiveChange(vendingMachineWarehouse.avalibleCoCaSmall.Last()));
-                            vendingMachineWarehouse.avalibleCoCaSmall.Pop();// water small
+                            vendingMachineWarehouse.avalibleCoCaSmall.Pop();
                         }
-                        else if (selectedVolume.Key == ConsoleKey.B)
+                        else if (selectedVolume.Key == ConsoleKey.B) // Coca Big
                         {
                             PaymentProcessing paymentProcessing = new PaymentProcessing();
                             Console.WriteLine();
                             Console.WriteLine($"You chose {vendingMachineWarehouse.avalibleCoCaBig.Last().ProdName} which cost {vendingMachineWarehouse.avalibleCoCaBig.Last().ProdCost}");
                             Console.WriteLine("Insert coins in nominals 1,2,5");
                             var coin = Convert.ToInt32(Console.ReadLine());
+                            while (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleCoCaSmall.Last().ProdCost)
+                            {
+
+                                paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleCoCaSmall.Last());
+                                if (paymentProcessing.CustomerInsertedCoins < vendingMachineWarehouse.avalibleCoCaSmall.Last().ProdCost)
+                                {
+                                    Console.WriteLine("Insert next coin");
+                                }
+                            }
                             paymentProcessing.AddCoins(coin, vendingMachineWarehouse.avalibleCoCaBig.Last());
                             vendingMachineWarehouse.avalibleCoCaBig.Pop();
                             Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
-                            Console.WriteLine($"Inserted Coins {paymentProcessing.CustomerInsertedCoins} ");
+
                             Console.WriteLine("Change for you " + paymentProcessing.GiveChange(vendingMachineWarehouse.avalibleCoCaBig.Last()));
                             vendingMachineWarehouse.avalibleCoCaBig.Pop();
                         }

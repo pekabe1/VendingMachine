@@ -18,15 +18,10 @@ namespace VendingMachine
         {
             if (coin.In(1, 2, 5))
             {
-                while (product.ProdCost > CustomerInsertedCoins)
-                    
-                    {
+             
 
                         CustomerInsertedCoins = coin + CustomerInsertedCoins;
                         TotalVendingMachineCoins.Add(CustomerInsertedCoins);
-                        
-
-                }
             }
             
             else Console.WriteLine("The machine accepts only coins with a value of 1, 2, 5");
