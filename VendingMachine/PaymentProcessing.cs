@@ -11,24 +11,36 @@ namespace VendingMachine
         
 
 
-        public decimal CustomerInsertedCoins { get; set; } = 0;
+       public  decimal CustomerInsertedCoins { get; set; } = 0;
          
 
         public decimal AddCoins(decimal coin,Product product)
         {
-            do
+            if (coin.In(1, 2, 5))
             {
-                if (coin.In(1M, 2M, 5M))
-                {
-                    CustomerInsertedCoins += coin;
-                    TotalVendingMachineCoins.Add(coin);
-                }
-                else Console.WriteLine("The machine accepts only coins with a value of 1, 2, 5");
+                while (product.ProdCost > CustomerInsertedCoins)
+                    
+                    {
 
-            } while (product.ProdCost >= CustomerInsertedCoins);
+                        CustomerInsertedCoins = coin + CustomerInsertedCoins;
+                        TotalVendingMachineCoins.Add(CustomerInsertedCoins);
+                        
+
+                }
+            }
+            
+            else Console.WriteLine("The machine accepts only coins with a value of 1, 2, 5");
             return CustomerInsertedCoins;
         }
-       
+        public decimal GiveChange( Product product)
+        {
+            if (CustomerInsertedCoins > product.ProdCost)
+            {
+                return CustomerInsertedCoins - product.ProdCost;
+            }
+            else return 0;
+
+        }
 
     }
 }
