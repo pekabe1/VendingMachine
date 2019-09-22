@@ -43,11 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoCaCola.cs" />
+    <Compile Include="Drink.cs" />
+    <Compile Include="ExtensionMetods.cs" />
+    <Compile Include="OrangeJuice.cs" />
     <Compile Include="PaymentProcessing.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="ProductOrder.cs" />
     <Compile Include="ProductWarehouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Water.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

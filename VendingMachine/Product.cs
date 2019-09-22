@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace VendingMachine
 {
-    class Product
+   internal abstract class Product
     {
         public string ProdName { get; set; }
         public decimal ProdCost { get; set; }
+     
+
+        //public Product(string prodName, decimal prodCost)
+        //{
+        //    ProdName = prodName;
+        //    ProdCost = prodCost;
+         
+        
+        //}
 
     }
 }
