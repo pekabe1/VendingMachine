@@ -60,7 +60,8 @@ namespace VendingMachine
         #endregion
 
 
-        internal List<Product> avalibleProducts = new List<Product>();
+        internal List<Product> avalibleProducts { get; set; } = new List<Product>(); // nie wiem czy get i set jest wymagane przy tworzeniu pól typu wewnętrznego
+        internal List<decimal> TotalVendingMachineCoins { get; set; } = new List<decimal>();
 
         public ProductWarehouse()
         {

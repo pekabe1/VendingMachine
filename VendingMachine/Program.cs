@@ -208,13 +208,24 @@ namespace VendingMachine
             //        }
             #endregion
 
-            foreach (Product item in vendingMachineWarehouse.avalibleProducts)
+            Console.WriteLine("  Avalible Products");
+            foreach (Drink item in vendingMachineWarehouse.avalibleProducts)
             {
-                Console.WriteLine($"Avalible Products ");
+                Console.WriteLine($"  Name : {item.ProdName} | Volume : {item.DrinkVolume} | Cost : {item.ProdCost } ");
             }
-            
+
+            Console.WriteLine("\nPress 'S' if you want to buy Orane Juice \nPress 'W' if you want to buy Water \nPress 'C' if you want to buy Coca Cola");
+            var selectProduct = Console.ReadKey();
+            vendingMachineWarehouse.avalibleProducts.FindLast(a => a.)
+
+            switch (ConsoleKey.S)
+            {
+                default:
+            }
+
+            Console.Read();
         }
         
-        
+
     }
 }
