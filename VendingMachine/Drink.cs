@@ -8,7 +8,7 @@ namespace VendingMachine
 {
     internal class Drink : Product
     {
-        public Drink(drinkVolume drinkVolume,string name,decimal cost)
+        internal Drink(drinkVolume drinkVolume,string name,decimal cost)
         {
             DrinkVolume = drinkVolume;
             ProdName = name;
@@ -16,13 +16,17 @@ namespace VendingMachine
             
         }
 
-        public enum drinkVolume
+        internal enum drinkVolume
         {
             Big = 1,
             Small = 2
         }
 
-        public drinkVolume DrinkVolume{get;set;}
-      
+        internal drinkVolume DrinkVolume{get;set;}
+        public override string ToString()
+        {
+            return $"Selected product : {ProdName} | Cost : { ProdCost} | Volume : { DrinkVolume} ";
+        }
+
     }
 }

@@ -11,6 +11,8 @@ namespace VendingMachine
         static void Main(string[] args)
         {
             ProductWarehouse vendingMachineWarehouse = new ProductWarehouse();
+
+
             #region
 
 
@@ -216,16 +218,102 @@ namespace VendingMachine
 
             Console.WriteLine("\nPress 'S' if you want to buy Orane Juice \nPress 'W' if you want to buy Water \nPress 'C' if you want to buy Coca Cola");
             var selectProduct = Console.ReadKey();
-            vendingMachineWarehouse.avalibleProducts.FindLast(a => a.)
+            Console.WriteLine("\nType Big if you want big drink \nType Small if you want small drink");
+            Console.WriteLine();
+            var selectVolume = Console.ReadLine();
 
-            switch (ConsoleKey.S)
-            {
-                default:
-            }
-
+            GiveProduct(vendingMachineWarehouse, selectProduct, selectVolume);
+            Console.WriteLine();
             Console.Read();
         }
-        
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private static void GiveProduct(ProductWarehouse vendingMachineWarehouse, ConsoleKeyInfo selectProduct, string selectVolume)
+        {
+            PaymentProcessing paymentProcessing = new PaymentProcessing();
+            switch (selectProduct.Key)
+            {
+                case ConsoleKey.S: // Orane Juice
+                    {
+
+                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<OrangeJuice>().FirstOrDefault(a => a.DrinkVolume.ToString() == selectVolume.ToString());
+                        paymentProcessing.DrinksInCart.Add(selectedDrink);
+                        vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
+                        Console.WriteLine(selectedDrink);
+                        break;
+                    }
+                case ConsoleKey.W: // Water
+                    {
+
+                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<Water>().FirstOrDefault(a => a.DrinkVolume.ToString() == selectVolume.ToString());
+                        paymentProcessing.DrinksInCart.Add(selectedDrink);
+                        vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
+                        Console.WriteLine(selectedDrink);
+                        break;
+                    }
+                case ConsoleKey.C: // Cola
+                    {
+
+                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<Water>().FirstOrDefault(a => a.DrinkVolume.ToString() == selectVolume.ToString());
+                        paymentProcessing.DrinksInCart.Add(selectedDrink);
+                        vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
+                        Console.WriteLine(selectedDrink);
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Select product again");
+                        break;
+                    }
+
+            }
+
+
+            while (paymentProcessing.CustomerInsertedCoins < paymentProcessing.DrinksInCart.Last().ProdCost)
+            {
+                Console.WriteLine("Insert coins in nominals 1,2,5");
+                Console.WriteLine();
+                var coin = Convert.ToInt32(Console.ReadLine());
+                if (coin.In(1, 2, 5))
+                {
+
+                    paymentProcessing.AddCoins(coin);
+                }
+                else
+                {
+
+                    Console.WriteLine("Wrong coin, insert coin again");
+                    Console.WriteLine();
+                    coin = Convert.ToInt32(Console.ReadLine());
+
+                }
+            }
+
+
+            Console.WriteLine("Change for you " + (paymentProcessing.CustomerInsertedCoins - paymentProcessing.DrinksInCart.Last().ProdCost));
+            Console.Read();
+        }
     }
 }

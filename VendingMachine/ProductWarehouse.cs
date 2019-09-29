@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VendingMachine
 {
-    internal class ProductWarehouse
+    internal class ProductWarehouse:Product
     {
         #region
         //internal Stack<Drink> avalibleCoCaBig { get; set; } = new Stack<Drink>();
@@ -77,7 +77,8 @@ namespace VendingMachine
             }
         }
 
-
+    
+      
     }
 
 

@@ -11,5 +11,7 @@ namespace VendingMachine
         public CoCaCola(drinkVolume drinkVolume, string name, decimal cost) : base(drinkVolume, name, cost)
         {
         }
+
+
     }
 }
