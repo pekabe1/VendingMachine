@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VendingMachine
 {
-    internal class ProductWarehouse:Product
+    internal class ProductWarehouse : Product
     {
         #region
         //internal Stack<Drink> avalibleCoCaBig { get; set; } = new Stack<Drink>();
@@ -63,6 +63,10 @@ namespace VendingMachine
         internal List<Product> avalibleProducts { get; set; } = new List<Product>(); // nie wiem czy get i set jest wymagane przy tworzeniu pól typu wewnętrznego
         internal List<decimal> TotalVendingMachineCoins { get; set; } = new List<decimal>();
 
+
+
+
+
         public ProductWarehouse()
         {
             for (int i = 0; i < 5; i++)
@@ -73,12 +77,22 @@ namespace VendingMachine
                 avalibleProducts.Add(new CoCaCola(CoCaCola.drinkVolume.Big, "CoCa Cola", 2.50M));
                 avalibleProducts.Add(new OrangeJuice(OrangeJuice.drinkVolume.Big, "Capi & Śmierdzi", 1M));
                 avalibleProducts.Add(new OrangeJuice(OrangeJuice.drinkVolume.Small, "Capi & Śmierdzi", 1.50M));
-                
+
             }
+            
+        }
+        internal void fillCoinContainer()
+        {
+            Random random = new Random();
+            decimal[] coinsToInsert = new decimal[] { 0.1M, 0.2M, 0.5M, 1M, 2M, 5M };
+            while (TotalVendingMachineCoins.Sum() < 50)
+            {
+                TotalVendingMachineCoins.Add(coinsToInsert[random.Next(0, 6)]);
+            }
+            
         }
 
-    
-      
+
     }
 
 

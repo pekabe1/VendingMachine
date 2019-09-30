@@ -11,9 +11,10 @@ namespace VendingMachine
         static void Main(string[] args)
         {
             ProductWarehouse vendingMachineWarehouse = new ProductWarehouse();
+            vendingMachineWarehouse.fillCoinContainer();
 
 
-            #region
+            #region Refactored Code
 
 
             //foreach (var item in vendingMachineWarehouse.avalibleCoCaSmall)
@@ -208,12 +209,14 @@ namespace VendingMachine
             //            }
             //            break;
             //        }
-            #endregion
+            #endregion   // Refactored
 
             Console.WriteLine("  Avalible Products");
-            foreach (Drink item in vendingMachineWarehouse.avalibleProducts)
+            foreach (Drink item in vendingMachineWarehouse.avalibleProducts.OrderBy(a => a.ProdName))
             {
                 Console.WriteLine($"  Name : {item.ProdName} | Volume : {item.DrinkVolume} | Cost : {item.ProdCost } ");
+
+
             }
 
             Console.WriteLine("\nPress 'S' if you want to buy Orane Juice \nPress 'W' if you want to buy Water \nPress 'C' if you want to buy Coca Cola");
@@ -221,9 +224,19 @@ namespace VendingMachine
             Console.WriteLine("\nType Big if you want big drink \nType Small if you want small drink");
             Console.WriteLine();
             var selectVolume = Console.ReadLine();
-
+            Console.WriteLine();
             GiveProduct(vendingMachineWarehouse, selectProduct, selectVolume);
             Console.WriteLine();
+            Console.Read();
+
+            Console.WriteLine(" Avalible Products after last transaction ");
+
+            foreach (Drink item in vendingMachineWarehouse.avalibleProducts.OrderBy(a => a.ProdName))
+            {
+                Console.WriteLine($"  Name : {item.ProdName} | Volume : {item.DrinkVolume} | Cost : {item.ProdCost } ");
+
+            }
+            Console.WriteLine($"VendingMachine Total Coins : {vendingMachineWarehouse.TotalVendingMachineCoins.Sum()}");
             Console.Read();
         }
 
@@ -258,7 +271,7 @@ namespace VendingMachine
                 case ConsoleKey.S: // Orane Juice
                     {
 
-                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<OrangeJuice>().FirstOrDefault(a => a.DrinkVolume.ToString() == selectVolume.ToString());
+                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<OrangeJuice>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
                         paymentProcessing.DrinksInCart.Add(selectedDrink);
                         vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
                         Console.WriteLine(selectedDrink);
@@ -267,7 +280,7 @@ namespace VendingMachine
                 case ConsoleKey.W: // Water
                     {
 
-                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<Water>().FirstOrDefault(a => a.DrinkVolume.ToString() == selectVolume.ToString());
+                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<Water>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
                         paymentProcessing.DrinksInCart.Add(selectedDrink);
                         vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
                         Console.WriteLine(selectedDrink);
@@ -276,7 +289,7 @@ namespace VendingMachine
                 case ConsoleKey.C: // Cola
                     {
 
-                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<Water>().FirstOrDefault(a => a.DrinkVolume.ToString() == selectVolume.ToString());
+                        var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<CoCaCola>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
                         paymentProcessing.DrinksInCart.Add(selectedDrink);
                         vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
                         Console.WriteLine(selectedDrink);
@@ -293,7 +306,7 @@ namespace VendingMachine
 
             while (paymentProcessing.CustomerInsertedCoins < paymentProcessing.DrinksInCart.Last().ProdCost)
             {
-                Console.WriteLine("Insert coins in nominals 1,2,5");
+                Console.WriteLine("Insert coins in nominals 1,2,5\nProduct costs: " + paymentProcessing.DrinksInCart.Last().ProdCost + " Your inserted money "+ paymentProcessing.CustomerInsertedCoins);
                 Console.WriteLine();
                 var coin = Convert.ToInt32(Console.ReadLine());
                 if (coin.In(1, 2, 5))
@@ -313,6 +326,9 @@ namespace VendingMachine
 
 
             Console.WriteLine("Change for you " + (paymentProcessing.CustomerInsertedCoins - paymentProcessing.DrinksInCart.Last().ProdCost));
+            var removeItem = paymentProcessing.DrinksInCart.Last();
+            paymentProcessing.DrinksInCart.Remove(removeItem);
+            
             Console.Read();
         }
     }
