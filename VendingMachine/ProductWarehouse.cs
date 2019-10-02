@@ -62,12 +62,19 @@ namespace VendingMachine
 
         internal List<Product> avalibleProducts { get; set; } = new List<Product>(); // nie wiem czy get i set jest wymagane przy tworzeniu pól typu wewnętrznego
         internal List<decimal> TotalVendingMachineCoins { get; set; } = new List<decimal>();
+        internal decimal Coins { get; set; }
 
+        internal decimal GetTotalMachineCoins()
+        {
+            return TotalVendingMachineCoins.Sum();
+        }
 
+        internal int GetNumersOfProduct()
+        {
+            return avalibleProducts.Count();
+        }
 
-
-
-        public ProductWarehouse()
+        internal void FillProductWarehouse()
         {
             for (int i = 0; i < 5; i++)
             {
@@ -79,17 +86,17 @@ namespace VendingMachine
                 avalibleProducts.Add(new OrangeJuice(OrangeJuice.drinkVolume.Small, "Capi & Śmierdzi", 1.50M));
 
             }
-            
+
         }
         internal void fillCoinContainer()
         {
             Random random = new Random();
             decimal[] coinsToInsert = new decimal[] { 0.1M, 0.2M, 0.5M, 1M, 2M, 5M };
-            while (TotalVendingMachineCoins.Sum() < 50)
+            while (TotalVendingMachineCoins.Count < 50)
             {
                 TotalVendingMachineCoins.Add(coinsToInsert[random.Next(0, 6)]);
             }
-            
+
         }
 
 

@@ -21,20 +21,29 @@ namespace VendingMachine
 
 
                 CustomerInsertedCoins = coin + CustomerInsertedCoins;
-                TotalVendingMachineCoins.Add(CustomerInsertedCoins);
+                
             }
 
             else Console.WriteLine("The machine accepts only coins with a value of 1, 2, 5");
             return CustomerInsertedCoins;
         }
-        //internal decimal GiveChange(Product product)
+        //internal decimal GiveChange(PaymentProcessing paymentProcessing, ProductWarehouse productWarehouse)
         //{
-        //    if (CustomerInsertedCoins > product.ProdCost)
-        //    {
-        //        return CustomerInsertedCoins - product.ProdCost;
-        //    }
-        //    else return 0;
 
+
+        //    decimal change = CustomerInsertedCoins - paymentProcessing.DrinksInCart.Last().ProdCost;
+        //    for (int i = 0; i < productWarehouse.TotalVendingMachineCoins.Count(); i++)
+        //    {
+        //        if (change == productWarehouse.TotalVendingMachineCoins[i])
+        //        {
+        //            productWarehouse.TotalVendingMachineCoins.Remove(i);
+        //            Console.WriteLine($"Returned nominals {change}");
+        //            return change;
+
+        //        }
+        //        else if (change > productWarehouse.TotalVendingMachineCoins[i])
+        //        {
+        //       
         //}
         internal List<Drink> DrinksInCart { get; set; } = new List<Drink>();
 

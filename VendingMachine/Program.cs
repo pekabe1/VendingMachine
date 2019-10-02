@@ -12,7 +12,8 @@ namespace VendingMachine
         {
             ProductWarehouse vendingMachineWarehouse = new ProductWarehouse();
             vendingMachineWarehouse.fillCoinContainer();
-
+            vendingMachineWarehouse.FillProductWarehouse();
+           
 
             #region Refactored Code
 
@@ -215,9 +216,8 @@ namespace VendingMachine
             foreach (Drink item in vendingMachineWarehouse.avalibleProducts.OrderBy(a => a.ProdName))
             {
                 Console.WriteLine($"  Name : {item.ProdName} | Volume : {item.DrinkVolume} | Cost : {item.ProdCost } ");
-
-
             }
+            Console.WriteLine($"Machine Coins :{vendingMachineWarehouse.GetTotalMachineCoins()} and number of avalible products {vendingMachineWarehouse.GetNumersOfProduct()}");
 
             Console.WriteLine("\nPress 'S' if you want to buy Orane Juice \nPress 'W' if you want to buy Water \nPress 'C' if you want to buy Coca Cola");
             var selectProduct = Console.ReadKey();
@@ -236,7 +236,8 @@ namespace VendingMachine
                 Console.WriteLine($"  Name : {item.ProdName} | Volume : {item.DrinkVolume} | Cost : {item.ProdCost } ");
 
             }
-            Console.WriteLine($"VendingMachine Total Coins : {vendingMachineWarehouse.TotalVendingMachineCoins.Sum()}");
+
+            Console.WriteLine($"Machine Coins :{vendingMachineWarehouse.GetTotalMachineCoins()} and number of avalible products {vendingMachineWarehouse.GetNumersOfProduct()}");
             Console.Read();
         }
 
@@ -270,7 +271,6 @@ namespace VendingMachine
             {
                 case ConsoleKey.S: // Orane Juice
                     {
-
                         var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<OrangeJuice>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
                         paymentProcessing.DrinksInCart.Add(selectedDrink);
                         vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
@@ -279,7 +279,6 @@ namespace VendingMachine
                     }
                 case ConsoleKey.W: // Water
                     {
-
                         var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<Water>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
                         paymentProcessing.DrinksInCart.Add(selectedDrink);
                         vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
@@ -288,7 +287,6 @@ namespace VendingMachine
                     }
                 case ConsoleKey.C: // Cola
                     {
-
                         var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<CoCaCola>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
                         paymentProcessing.DrinksInCart.Add(selectedDrink);
                         vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
@@ -300,10 +298,7 @@ namespace VendingMachine
                         Console.WriteLine("Select product again");
                         break;
                     }
-
             }
-
-
             while (paymentProcessing.CustomerInsertedCoins < paymentProcessing.DrinksInCart.Last().ProdCost)
             {
                 Console.WriteLine("Insert coins in nominals 1,2,5\nProduct costs: " + paymentProcessing.DrinksInCart.Last().ProdCost + " Your inserted money "+ paymentProcessing.CustomerInsertedCoins);
@@ -311,24 +306,20 @@ namespace VendingMachine
                 var coin = Convert.ToInt32(Console.ReadLine());
                 if (coin.In(1, 2, 5))
                 {
-
                     paymentProcessing.AddCoins(coin);
                 }
                 else
                 {
-
                     Console.WriteLine("Wrong coin, insert coin again");
                     Console.WriteLine();
                     coin = Convert.ToInt32(Console.ReadLine());
-
                 }
             }
-
-
-            Console.WriteLine("Change for you " + (paymentProcessing.CustomerInsertedCoins - paymentProcessing.DrinksInCart.Last().ProdCost));
-            var removeItem = paymentProcessing.DrinksInCart.Last();
-            paymentProcessing.DrinksInCart.Remove(removeItem);
-            
+            decimal change = paymentProcessing.CustomerInsertedCoins - paymentProcessing.DrinksInCart.Last().ProdCost;
+           
+            Console.WriteLine($"Change for you {change}");
+            vendingMachineWarehouse.TotalVendingMachineCoins.Add(paymentProcessing.CustomerInsertedCoins - change);
+            //  paymentProcessing.GiveChange(paymentProcessing, vendingMachineWarehouse);
             Console.Read();
         }
     }
