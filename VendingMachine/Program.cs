@@ -305,18 +305,20 @@ namespace VendingMachine
 
                 while (paymentProcessing.CustomerInsertedCoins < paymentProcessing.DrinksInCart.Last().ProdCost)
                 {
-                    Console.WriteLine("Insert coins in nominals 1,2,5\nProduct costs: " + paymentProcessing.DrinksInCart.Last().ProdCost + " Your inserted money " + paymentProcessing.CustomerInsertedCoins);
+                    Console.WriteLine("Insert coins in nominals 1,2,5\nProduct costs: " + paymentProcessing.DrinksInCart.Last().ProdCost);
                     Console.WriteLine();
                     var coin = Convert.ToInt32(Console.ReadLine());
                     if (coin.In(1, 2, 5))
                     {
                         paymentProcessing.AddCoins(coin);
+                        Console.WriteLine($"Your inserted money " + paymentProcessing.CustomerInsertedCoins);
                     }
                     else
                     {
                         Console.WriteLine("Wrong coin, insert coin again");
                         Console.WriteLine();
                         coin = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine($"Your inserted money " + paymentProcessing.CustomerInsertedCoins);
                     }
                 }
                 decimal change = paymentProcessing.CustomerInsertedCoins - paymentProcessing.DrinksInCart.Last().ProdCost;
