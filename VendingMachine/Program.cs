@@ -234,8 +234,8 @@ namespace VendingMachine
             foreach (Drink item in vendingMachineWarehouse.avalibleProducts.OrderBy(a => a.ProdName))
             {
                 Console.WriteLine($"  Name : {item.ProdName} | Volume : {item.DrinkVolume} | Cost : {item.ProdCost } ");
-
             }
+
 
             Console.WriteLine($"Machine Coins :{vendingMachineWarehouse.GetTotalMachineCoins()} and number of avalible products {vendingMachineWarehouse.GetNumersOfProduct()}");
             Console.Read();
@@ -272,24 +272,24 @@ namespace VendingMachine
                 case ConsoleKey.S: // Orane Juice
                     {
                         var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<OrangeJuice>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
-                            paymentProcessing.DrinksInCart.Add(selectedDrink);
-                            vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
-                            Console.WriteLine(selectedDrink);                      
+                        paymentProcessing.DrinksInCart.Add(selectedDrink);
+                        vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
+                        Console.WriteLine(selectedDrink);
                         break;
                     }
                 case ConsoleKey.W: // Water
                     {
                         var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<Water>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
-                            paymentProcessing.DrinksInCart.Add(selectedDrink);
-                            vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
+                        paymentProcessing.DrinksInCart.Add(selectedDrink);
+                        vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
                         Console.WriteLine(selectedDrink);
                         break;
                     }
                 case ConsoleKey.C: // Cola
                     {
                         var selectedDrink = vendingMachineWarehouse.avalibleProducts.OfType<CoCaCola>().FirstOrDefault(a => a.DrinkVolume.ToString().ToUpper() == selectVolume.ToString().ToUpper());
-                            paymentProcessing.DrinksInCart.Add(selectedDrink);
-                            vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
+                        paymentProcessing.DrinksInCart.Add(selectedDrink);
+                        vendingMachineWarehouse.avalibleProducts.Remove(selectedDrink);
                         Console.WriteLine(selectedDrink);
                         break;
                     }
@@ -299,7 +299,7 @@ namespace VendingMachine
                         break;
                     }
             }
-            if (paymentProcessing.DrinksInCart.Count < 0)
+            if (paymentProcessing.DrinksInCart.Count > 0)
             {
 
 
@@ -319,13 +319,16 @@ namespace VendingMachine
                         coin = Convert.ToInt32(Console.ReadLine());
                     }
                 }
-
-
-
                 decimal change = paymentProcessing.CustomerInsertedCoins - paymentProcessing.DrinksInCart.Last().ProdCost;
-
-                Console.WriteLine($"Change for you {change}");
-                vendingMachineWarehouse.TotalVendingMachineCoins.Add(paymentProcessing.CustomerInsertedCoins - change);
+                if (change <= vendingMachineWarehouse.TotalVendingMachineCoins.Sum())
+                {
+                    Console.WriteLine($"Change for you {change}");
+                    vendingMachineWarehouse.TotalVendingMachineCoins.Add(paymentProcessing.CustomerInsertedCoins - change);
+                }
+                else
+                {
+                    Console.WriteLine("Not enough money to give change");
+                }
                 //  paymentProcessing.GiveChange(paymentProcessing, vendingMachineWarehouse);
                 Console.Read();
             }
